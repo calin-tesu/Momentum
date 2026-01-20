@@ -16,6 +16,7 @@ def record_task_completed() -> UserState:
     state.last_interaction_at = now
     state.last_task_outcome = InteractionType.COMPLETED
     state.last_task_completed_at = now
+    state.days_inactive = 0  # Reset on interaction
 
     # Reset postponement counters
     state.consecutive_postponements = 0
@@ -31,6 +32,7 @@ def record_task_postponed() -> UserState:
 
     state.last_interaction_at = now
     state.last_task_outcome = InteractionType.POSTPONED
+    state.days_inactive = 0  # Reset on interaction
 
     # Increment postponement counters
     state.consecutive_postponements += 1
