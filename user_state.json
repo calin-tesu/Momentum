@@ -1,0 +1,10 @@
+{
+    "current_step_id": "test",
+    "days_inactive": 0,
+    "consecutive_postponements": 0,
+    "last_interaction_at": null,
+    "last_task_outcome": null,
+    "last_task_completed_at": null,
+    "postponements_current_step": 0,
+    "recent_task_categories": []
+}
