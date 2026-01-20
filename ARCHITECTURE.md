@@ -168,5 +168,3 @@ At no point does the AI agent modify curriculum, rules, or system state directly
 ## Guiding Principle
 
 > Architecture exists to make incorrect behavior impossible.
-
-If a component can violate agent boundaries, it is incorrectly designed.
