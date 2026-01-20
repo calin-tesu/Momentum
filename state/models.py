@@ -38,8 +38,11 @@ class UserState:
     Only explicit actions, no inferred data."""
     current_step_id: str
     days_inactive: int
-    consecutive_postpones: int
-    last_interaction_timestamp: Optional[datetime]
+    consecutive_postponements: int
+    last_interaction_at: Optional[datetime]
+    last_task_outcome: Optional[InteractionType]
+    last_task_completed_at: Optional[datetime]
+    postponements_current_step: int
     recent_task_categories: List[TaskCategory]
 
 
