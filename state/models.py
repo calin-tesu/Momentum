@@ -19,6 +19,13 @@ class InteractionType(Enum):
     COMPLETED = "completed"
     POSTPONED = "postponed"
 
+class RuleOutcome(Enum):
+    """Result of deterministic rule evaluation.
+    Bridge between user state monitoring and strategy selection.
+    No AI involvement in rule evaluation."""
+    INACTIVE = "inactivity_detected"
+    REPEATED_POSTPONEMENT = "repeated_postponement"
+    NORMAL = "normal_progress"
 
 @dataclass
 class CurriculumStep:
@@ -44,15 +51,6 @@ class UserState:
     last_task_completed_at: Optional[datetime]
     postponements_current_step: int
     recent_task_categories: List[TaskCategory]
-
-
-@dataclass
-class RuleOutcome:
-    """Result of deterministic rule evaluation.
-    Bridge between user state monitoring and strategy selection.
-    No AI involvement in rule evaluation."""
-    intervention_required: bool
-    reason: str
 
 
 @dataclass

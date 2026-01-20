@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional
 from state.models import UserState, InteractionType, TaskCategory
 
@@ -8,7 +8,7 @@ def save_user_state(state: UserState, file_path: str = "user_state.json"):
     """Save UserState to a JSON file."""
     data = {
         "current_step_id": state.current_step_id,
-        "days_inactive": state.days_inactive,
+        # "days_inactive": state.days_inactive,
         "consecutive_postponements": state.consecutive_postponements,
         "last_interaction_at": state.last_interaction_at.isoformat() if state.last_interaction_at else None,
         "last_task_outcome": state.last_task_outcome.value if state.last_task_outcome else None,
@@ -25,9 +25,13 @@ def load_user_state(file_path: str = "user_state.json") -> UserState:
     try:
         with open(file_path, "r") as f:
             data = json.load(f)
+        last_interaction_at = datetime.fromisoformat(data["last_interaction_at"]) if data.get("last_interaction_at") else None
+        now = datetime.now(timezone.utc)
+        days_inactive = (now - last_interaction_at).days if last_interaction_at else 0
+        
         state = UserState(
             current_step_id=data.get("current_step_id", ""),
-            days_inactive=data.get("days_inactive", 0),
+            days_inactive=days_inactive,
             consecutive_postponements=data.get("consecutive_postponements", 0),
             last_interaction_at=datetime.fromisoformat(data["last_interaction_at"]) if data.get("last_interaction_at") else None,
             last_task_outcome=InteractionType(data["last_task_outcome"]) if data.get("last_task_outcome") else None,
