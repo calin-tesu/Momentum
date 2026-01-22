@@ -27,6 +27,12 @@ class RuleOutcome(Enum):
     REPEATED_POSTPONEMENT = "repeated_postponement"
     NORMAL = "normal_progress"
 
+class Strategy(Enum):
+    """Intervention strategies that constrain AI behavior."""
+    REENTRY_ASSIST = "reentry_assist"
+    SCOPE_REDUCTION = "scope_reduction"
+    NORMAL_PROGRESS = "normal_progress"
+
 @dataclass
 class CurriculumStep:
     """A fixed, immutable step in the learning path.
@@ -54,7 +60,7 @@ class UserState:
 
 
 @dataclass
-class Strategy:
+class InterventionStrategy:
     """Intervention approach that constrains AI behavior.
     Defines what the AI can do, not what it should do.
     Examples: "normal_progress", "scope_reduction", "task_variation" """

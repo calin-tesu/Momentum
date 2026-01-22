@@ -1,3 +1,4 @@
+from agent.strategy_selector import select_strategy
 from rules.rules import evaluate_rules
 from state.store import get_user_state, record_task_completed, record_task_postponed
 from state.models import InteractionType
@@ -11,7 +12,10 @@ def main():
 
         # Evaluate rules
         rule_outcome = evaluate_rules(user_state)
+        strategy_selector = select_strategy(rule_outcome)
         print(f"Rule evaluation outcome: {rule_outcome}")
+        print(f"Selected strategy: {strategy_selector.name}")
+        print("--------------------------------")
 
         # TODO: Integrate strategy selection, task instantiation, and UI here
         # For now, simulate user action with input
