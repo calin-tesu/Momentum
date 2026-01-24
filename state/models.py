@@ -3,6 +3,9 @@ from datetime import datetime
 from typing import List, Optional
 from enum import Enum
 
+"""
+Runtime user state models tracking interaction history and progress.
+"""
 
 class TaskCategory(Enum):
     """Bounded set of task types the AI agent can select from.

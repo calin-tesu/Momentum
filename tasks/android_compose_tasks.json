@@ -1,0 +1,72 @@
+{
+  "TASK_TEMPLATES": {
+    "INSPECT": [
+      {
+        "id": "insp_01",
+        "strategies": ["All"],
+        "description_hint": "Skim the first 20 lines of [FILE]."
+      },
+      {
+        "id": "insp_02",
+        "strategies": ["All"],
+        "description_hint": "Search for all occurrences of [KEYWORD/API]."
+      },
+      {
+        "id": "insp_03",
+        "strategies": ["All"],
+        "description_hint": "Read only the header comments/KDoc in [FILE]."
+      }
+    ],
+    "REFLECT": [
+      {
+        "id": "refl_01",
+        "strategies": ["REENTRY"],
+        "description_hint": "Name one thing that felt \"heavy\" last session."
+      },
+      {
+        "id": "refl_02",
+        "strategies": ["REENTRY"],
+        "description_hint": "State the goal of this module in exactly one sentence."
+      },
+      {
+        "id": "refl_03",
+        "strategies": ["REENTRY"],
+        "description_hint": "Predict the next sub-topic without checking the list."
+      }
+    ],
+    "PREPARE": [
+      {
+        "id": "prep_01",
+        "strategies": ["NORMAL"],
+        "description_hint": "Rename [VARIABLE/FILE] to something more descriptive."
+      },
+      {
+        "id": "prep_02",
+        "strategies": ["NORMAL"],
+        "description_hint": "Create a // TODO at the exact line where logic goes."
+      },
+      {
+        "id": "prep_03",
+        "strategies": ["NORMAL"],
+        "description_hint": "Create an empty file named [FILENAME]."
+      }
+    ],
+    "MICRO_MODIFY": [
+      {
+        "id": "modi_01",
+        "strategies": ["NORMAL"],
+        "description_hint": "Change a UI literal (string/color/value) in [FILE]."
+      },
+      {
+        "id": "modi_02",
+        "strategies": ["NORMAL"],
+        "description_hint": "Add a Log.d or println to confirm [METHOD] runs."
+      },
+      {
+        "id": "modi_03",
+        "strategies": ["NORMAL"],
+        "description_hint": "Run the auto-formatter on [FILE]."
+      }
+    ]
+  }
+}
