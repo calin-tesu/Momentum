@@ -22,6 +22,5 @@ class TaskTemplate:
     """
     id: str
     category: TaskCategory
-    allowed_strategies: List[StrategyType]
+    strategies: List[StrategyType]
     description_hint: str
-    est_start_time_sec: int
