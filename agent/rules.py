@@ -2,6 +2,10 @@ from state.models import UserState, Strategy
 from datetime import datetime, timezone
 
 
+# TODO: Consider a renaming of function and file names to better reflect purpose,
+# e.g., agent/decision_engine.py
+# or agent/agent_brain.py
+# or agent/decision_logic.py
 def determine_strategy(state: UserState) -> Strategy:
     """
     Evaluate user state against deterministic rules to determine an intervention strategy.
