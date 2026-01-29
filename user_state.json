@@ -1,9 +1,9 @@
 {
     "current_step_id": "",
-    "consecutive_postponements": 6,
-    "last_interaction_at": "2026-01-22T19:04:31.923822+00:00",
+    "consecutive_postponements": 8,
+    "last_interaction_at": "2026-01-29T18:26:58.824945+00:00",
     "last_task_outcome": "postponed",
     "last_task_completed_at": "2026-01-22T17:05:59.974805+00:00",
-    "postponements_current_step": 6,
+    "postponements_current_step": 8,
     "recent_task_categories": []
 }

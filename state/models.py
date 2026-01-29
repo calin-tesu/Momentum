@@ -22,14 +22,6 @@ class InteractionType(Enum):
     COMPLETED = "completed"
     POSTPONED = "postponed"
 
-class RuleOutcome(Enum):
-    """Result of deterministic rule evaluation.
-    Bridge between user state monitoring and strategy selection.
-    No AI involvement in rule evaluation."""
-    INACTIVE = "inactivity_detected"
-    REPEATED_POSTPONEMENT = "repeated_postponement"
-    NORMAL = "normal_progress"
-
 class Strategy(Enum):
     """Intervention strategies that constrain AI behavior."""
     REENTRY_ASSIST = "reentry_assist"
@@ -112,4 +104,3 @@ class InteractionResult:
     result_type: InteractionType
     task_template_id: str
     timestamp: datetime
-
