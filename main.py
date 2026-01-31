@@ -1,6 +1,7 @@
+from agent.orchestrator import run_agent_cycle
 from agent.rules import determine_strategy
 from state.store import get_user_state, record_task_completed, record_task_postponed
-from state.models import InteractionType
+from state.models import InteractionType, TaskTemplate
 
 def main():
     """Main entry point for Momentum app."""
@@ -13,6 +14,15 @@ def main():
         strategy = determine_strategy(user_state)
         print(f"Selected strategy: {strategy.name}")
         print("--------------------------------")
+
+        fake_templates = [
+            TaskTemplate(id="insp_01", category="INSPECT", strategies=["All"], description_hint="..."),
+            TaskTemplate(id="refl_01", category="REFLECT", strategies=["REENTRY_ASSIST"], description_hint="..."),
+            ]
+        
+        response = run_agent_cycle(user_state, fake_templates)
+        print(response)
+
 
         # TODO: Integrate strategy selection, task instantiation, and UI here
         # For now, simulate user action with input

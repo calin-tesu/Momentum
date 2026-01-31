@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import Dict, List
 
-from tasks.models import TaskTemplate
+from state.models import TaskTemplate
 
 
 class TaskTemplateValidationError(Exception):

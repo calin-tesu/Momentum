@@ -10,11 +10,14 @@ Runtime user state models tracking interaction history and progress.
 class TaskCategory(Enum):
     """Bounded set of task types the AI agent can select from.
     These define the agent's action space - no other task types are allowed."""
-    INSPECT = "inspect"
-    RENAME = "rename"
-    MODIFY_SMALL = "modify_small"
-    ADD_MINIMAL = "add_minimal"
-    REFACTOR_MICRO = "refactor_micro"
+    INSPECT = "INSPECT"
+    REFLECT = "REFLECT"
+    PREPARE = "PREPARE"
+    MICRO_MODIFY = "MICRO_MODIFY"
+    RENAME = "RENAME"
+    MODIFY_SMALL = "MODIFY_SMALL"
+    ADD_MINIMAL = "ADD_MINIMAL"
+    REFACTOR_MICRO = "REFACTOR_MICRO"
 
 
 class InteractionType(Enum):
@@ -71,9 +74,9 @@ class TaskTemplate:
     AI selects from these, never creates new ones.
     Example: "Inspect the MainActivity class structure" """
     id: str
-    category: TaskCategory
-    step_id: str
-    short_description: str
+    category: str  # Stored as string to match JSON loader flexibility, or TaskCategory
+    strategies: List[str]
+    description_hint: str
 
 
 @dataclass

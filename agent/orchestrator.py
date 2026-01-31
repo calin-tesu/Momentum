@@ -1,39 +1,39 @@
 from dataclasses import dataclass
-from typing import Optional
+from typing import List, Optional
 
-from state.models import UserState
+from state.models import UserState, TaskTemplate
+from tasks.selector import select_task
 from .rules import determine_strategy
 from state.models import Strategy
 
 @dataclass
 class AgentResponse:
-    strategy: Optional[str]
+    strategy: Optional[Strategy]
     task_id: Optional[str]
     message: Optional[str]
 
 
-def run_agent_cycle(user_state: UserState) -> AgentResponse:
+def run_agent_cycle(user_state: UserState, task_templates: List[TaskTemplate]) -> AgentResponse:
     """
     Run a single cycle of the agent's decision-making process.
     Evaluates user state, selects strategy, and prepares response.
     """
 
     # Step 1 & 2: Evaluate rules and select strategy
-    strategy = determine_strategy(user_state)
-    task_id = None  # task_id is not determined by this logic path
+    decision = determine_strategy(user_state)
 
-    # Step 3: Prepare response message
-    if strategy == Strategy.REENTRY_ASSIST:
-        message = "It's been a while since your last interaction. Please check in!"
-    elif strategy == Strategy.SCOPE_REDUCTION:
-        message = "We noticed you've postponed tasks multiple times. Can we assist you?"
-    else:
-        # No message for NORMAL_PROGRESS to avoid being too chatty.
-        # Other event-driven celebrations can be added elsewhere.
-        message = None
+    if decision is None:
+        return AgentResponse(
+            strategy=None,
+            task_id=None,
+            message=None
+            )
+
+    # Step 3: Select task based on strategy
+    task = select_task(decision, task_templates)
 
     return AgentResponse(
-        strategy=strategy.name if strategy else None,
-        task_id=task_id,
-        message=message
+        strategy=decision.name,
+        task_id=task.id if task else None,
+        message=task.description_hint if task else None
     )
