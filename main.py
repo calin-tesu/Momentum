@@ -1,4 +1,5 @@
 from pathlib import Path
+from collections import defaultdict
 from agent.orchestrator import run_agent_cycle
 from state.store import get_user_state, record_task_completed, record_task_postponed
 from state.models import TaskTemplate
@@ -9,6 +10,14 @@ def main():
     # Load task templates
     # TODO: Consider moving the loader to orchestrator or another appropriate module
     templates = loader.load_task_templates(Path("tasks/android_compose_tasks.json"))
+
+    # Print summary of loaded templates
+    by_category = defaultdict(list)
+    for t in templates:
+        by_category[t.category].append(t)
+
+    for category, items in by_category.items():
+        print(f"{category} → {len(items)} tasks")
 
     while True:
         # Load persisted user state
