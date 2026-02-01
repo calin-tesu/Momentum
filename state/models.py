@@ -97,6 +97,9 @@ class AgentOutput:
     AI never modifies system state directly."""
     task_text: str
     selected_task_template_id: str
+    strategy_name: Strategy
+
+
 
 
 @dataclass

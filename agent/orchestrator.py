@@ -25,5 +25,6 @@ def run_agent_cycle(user_state: UserState, task_templates: List[TaskTemplate]) -
 
     return AgentOutput(
         task_text=task.description_hint,
-        selected_task_template_id=task.id
+        selected_task_template_id=task.id,
+        strategy_name=decision.name
     )

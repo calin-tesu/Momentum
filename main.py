@@ -18,6 +18,7 @@ def main():
         # Run agent cycle
         response = run_agent_cycle(user_state, templates)
         if response:
+            print(f"Selected strategy: {response.strategy_name}")
             print(f"Agent Output: {response.task_text} (ID: {response.selected_task_template_id})")
         else:
             print("No task selected by agent.")
