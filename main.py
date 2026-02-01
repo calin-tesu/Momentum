@@ -1,6 +1,5 @@
 from pathlib import Path
 from agent.orchestrator import run_agent_cycle
-from agent.rules import determine_strategy
 from state.store import get_user_state, record_task_completed, record_task_postponed
 from state.models import TaskTemplate
 from tasks import loader
@@ -12,15 +11,7 @@ def main():
         user_state = get_user_state()
         print(f"Loaded user state: Current step ID: {user_state.current_step_id}, Days inactive: {user_state.days_inactive}")
 
-        # Evaluate rules
-        strategy = determine_strategy(user_state)
-        print(f"Selected strategy: {strategy.name}")
-        print("--------------------------------")
-        
-        templates_map = loader.load_task_templates(Path("tasks/android_compose_tasks.json"))
-        # Flatten the dictionary of lists into a single list
-        templates = [t for sublist in templates_map.values() for t in sublist]
-
+        templates = loader.load_task_templates(Path("tasks/android_compose_tasks.json"))
 
         # Run agent cycle
         response = run_agent_cycle(user_state, templates)

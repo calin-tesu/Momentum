@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Dict, List
+from typing import List
 
 from state.models import TaskTemplate
 
@@ -9,12 +9,12 @@ class TaskTemplateValidationError(Exception):
     pass
 
 
-def load_task_templates(path: Path) -> Dict[str, List[TaskTemplate]]:
+def load_task_templates(path: Path) -> List[TaskTemplate]:
     """
     Load and validate task templates from a JSON file.
 
     Returns:
-        Dict[category, List[TaskTemplate]]
+        List[TaskTemplate]
     """
     if not path.exists():
         raise FileNotFoundError(f"Task template file not found: {path}")
@@ -25,7 +25,7 @@ def load_task_templates(path: Path) -> Dict[str, List[TaskTemplate]]:
     if "TASK_TEMPLATES" not in raw:
         raise TaskTemplateValidationError("Missing top-level key: TASK_TEMPLATES")
 
-    templates_by_category: Dict[str, List[TaskTemplate]] = {}
+    all_templates: List[TaskTemplate] = []
     seen_ids = set()
 
     for category, entries in raw["TASK_TEMPLATES"].items():
@@ -34,19 +34,16 @@ def load_task_templates(path: Path) -> Dict[str, List[TaskTemplate]]:
                 f"Category '{category}' must be a list"
             )
 
-        templates: List[TaskTemplate] = []
-
         for entry in entries:
             template = _validate_and_build_template(
                 entry=entry,
                 category=category,
                 seen_ids=seen_ids,
             )
-            templates.append(template)
+            all_templates.append(template)
 
-        templates_by_category[category] = templates
+    return all_templates
 
-    return templates_by_category
 
 def _validate_and_build_template(
     entry: dict,
