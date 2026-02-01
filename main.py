@@ -15,11 +15,13 @@ def main():
         print(f"Selected strategy: {strategy.name}")
         print("--------------------------------")
 
+        # Load task templates (in a real app, this would be from a file)
         fake_templates = [
             TaskTemplate(id="insp_01", category="INSPECT", strategies=["All"], description_hint="..."),
             TaskTemplate(id="refl_01", category="REFLECT", strategies=["REENTRY_ASSIST"], description_hint="..."),
             ]
         
+        # Run agent cycle
         response = run_agent_cycle(user_state, fake_templates)
         print(response)
 
