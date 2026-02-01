@@ -1,7 +1,9 @@
+from pathlib import Path
 from agent.orchestrator import run_agent_cycle
 from agent.rules import determine_strategy
 from state.store import get_user_state, record_task_completed, record_task_postponed
-from state.models import InteractionType, TaskTemplate
+from state.models import TaskTemplate
+from tasks import loader
 
 def main():
     """Main entry point for Momentum app."""
@@ -14,16 +16,18 @@ def main():
         strategy = determine_strategy(user_state)
         print(f"Selected strategy: {strategy.name}")
         print("--------------------------------")
-
-        # Load task templates (in a real app, this would be from a file)
-        fake_templates = [
-            TaskTemplate(id="insp_01", category="INSPECT", strategies=["All"], description_hint="..."),
-            TaskTemplate(id="refl_01", category="REFLECT", strategies=["REENTRY_ASSIST"], description_hint="..."),
-            ]
         
+        templates_map = loader.load_task_templates(Path("tasks/android_compose_tasks.json"))
+        # Flatten the dictionary of lists into a single list
+        templates = [t for sublist in templates_map.values() for t in sublist]
+
+
         # Run agent cycle
-        response = run_agent_cycle(user_state, fake_templates)
-        print(response)
+        response = run_agent_cycle(user_state, templates)
+        if response:
+            print(f"Agent Output: {response.task_text} (ID: {response.selected_task_template_id})")
+        else:
+            print("No task selected by agent.")
 
 
         # TODO: Integrate strategy selection, task instantiation, and UI here
@@ -39,6 +43,11 @@ def main():
             break
         else:
             print("Invalid input.")
+        
+        print("================================")
+        print()
+
+
 
 if __name__ == "__main__":
     main()
