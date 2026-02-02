@@ -37,34 +37,34 @@
     "PREPARE": [
       {
         "id": "prep_01",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Rename [VARIABLE/FILE] to something more descriptive."
       },
       {
         "id": "prep_02",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Create a // TODO at the exact line where logic goes."
       },
       {
         "id": "prep_03",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Create an empty file named [FILENAME]."
       }
     ],
     "MICRO_MODIFY": [
       {
         "id": "modi_01",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Change a UI literal (string/color/value) in [FILE]."
       },
       {
         "id": "modi_02",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Add a Log.d or println to confirm [METHOD] runs."
       },
       {
         "id": "modi_03",
-        "strategies": ["NORMAL"],
+        "strategies": ["NORMAL", "SCOPE_REDUCTION"],
         "description_hint": "Run the auto-formatter on [FILE]."
       }
     ]

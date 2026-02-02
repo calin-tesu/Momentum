@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 from typing import List
 
-from state.models import TaskTemplate
+from state.models import TaskTemplate, TaskCategory
 
 
 class TaskTemplateValidationError(Exception):
@@ -33,6 +33,12 @@ def load_task_templates(path: Path) -> List[TaskTemplate]:
             raise TaskTemplateValidationError(
                 f"Category '{category}' must be a list"
             )
+        
+        # Validate that the JSON category matches a defined TaskCategory
+        try:
+            TaskCategory(category)
+        except ValueError:
+            raise TaskTemplateValidationError(f"Unknown category '{category}' in JSON. Must be one of {[e.value for e in TaskCategory]}")
 
         for entry in entries:
             template = _validate_and_build_template(
