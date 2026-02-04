@@ -24,7 +24,7 @@ def select_task(strategy: Strategy, templates: List[TaskTemplate]) -> Optional[T
         return None
     
     # Strategy-specific selection policy
-    if strategy == Strategy.REENTRY:
+    if strategy == Strategy.REENTRY_ASSIST:
         # Lowest-friction, orientation tasks
         preferred_categories = {TaskCategory.INSPECT.value, TaskCategory.REFLECT.value}
 

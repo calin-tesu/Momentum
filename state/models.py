@@ -27,9 +27,9 @@ class InteractionType(Enum):
 
 class Strategy(Enum):
     """Intervention strategies that constrain AI behavior."""
-    REENTRY = "reentry"
+    REENTRY_ASSIST = "reentry_assist"
     SCOPE_REDUCTION = "scope_reduction"
-    NORMAL = "normal"
+    NORMAL_PROGRESS = "normal_progress"
 
 @dataclass
 class CurriculumStep:
