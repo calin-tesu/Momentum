@@ -41,6 +41,15 @@ class CurriculumStep:
     description: str
     allowed_task_categories: List[TaskCategory]
 
+@dataclass
+class ProjectContext:
+    """Declared snapshot of the learning project.
+    Used to ground the AI and prevent hallucinated references."""
+    project_type: str  # e.g. "android_compose"
+    existing_files: List[str]
+    known_components: List[str]  # e.g. Composables, ViewModels
+
+
 
 @dataclass
 class UserState:
@@ -88,6 +97,7 @@ class AgentInput:
     strategy: Strategy
     available_task_templates: List[TaskTemplate]
     recent_task_categories: List[TaskCategory]
+    project_context: ProjectContext
 
 
 @dataclass

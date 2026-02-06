@@ -1,6 +1,6 @@
 from typing import List, Optional
 
-from state.models import UserState, TaskTemplate, AgentOutput
+from state.models import UserState, TaskTemplate, AgentOutput, AgentInput, CurriculumStep, ProjectContext
 from tasks.selector import select_task
 from .rules import determine_strategy
 
@@ -25,16 +25,41 @@ def run_agent_cycle(
     # Step 3: Select task based on strategy
     task = select_task(decision, task_templates)
 
-    prompt = instatiator(
-        system_prompt=system_prompt,
-        strategy=decision,
-        task_template=task,
-        user_context=f"Current step: {user_state.current_step_id}",
-    )
-
-
     if not task:
         return None
+
+    # Construct AgentInput
+    # Note: CurriculumStep and ProjectContext are mocked here as they are not yet fully integrated
+    agent_input = AgentInput(
+        step=CurriculumStep(
+            id=user_state.current_step_id,
+            title="Placeholder Title",
+            description="Placeholder Description",
+            allowed_task_categories=[]
+        ),
+        strategy=decision,
+        available_task_templates=[task],
+        recent_task_categories=user_state.recent_task_categories,
+        project_context=ProjectContext(
+            project_type="android_compose",
+            existing_files=[
+                "MainActivity.kt",
+                "MainScreen.kt",
+                "Theme.kt",
+                "MainViewModel.kt"
+            ],
+            known_components=[
+                "Composable functions",
+                "State hoisting",
+                "ViewModel"
+            ]
+        )
+    )
+
+    prompt = instatiator(
+        system_prompt=system_prompt,
+        agent_input=agent_input,
+    )
 
     return AgentOutput(
         prompt=prompt,
