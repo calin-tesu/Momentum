@@ -56,13 +56,13 @@ def run_agent_cycle(
         )
     )
 
-    prompt = instatiator(
+    instantiated_task = instatiator(
         system_prompt=system_prompt,
         agent_input=agent_input,
     )
 
     return AgentOutput(
-        prompt=prompt,
+        instantiated_task=instantiated_task,
         task_text=task.description_hint,
         selected_task_template_id=task.id,
         strategy_name=decision.name

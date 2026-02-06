@@ -42,7 +42,7 @@ def main():
             print("No task selected by agent.")
 
         print()
-        print(response.prompt)
+        print(response.instantiated_task)
         print()
 
         # For now, simulate user action with input

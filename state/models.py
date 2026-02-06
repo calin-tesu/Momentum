@@ -105,7 +105,7 @@ class AgentOutput:
     """Strict boundary: everything the AI agent is allowed to output.
     Only one task description, no plans or sequences.
     AI never modifies system state directly."""
-    prompt: str
+    instantiated_task: str
     task_text: str
     selected_task_template_id: str
     strategy_name: str
