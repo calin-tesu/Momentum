@@ -1,6 +1,8 @@
+import os
 from pathlib import Path
 from collections import defaultdict
-from agent import fake_llm_adapter
+from dotenv import load_dotenv
+from agent.llm_adapter import LLMTaskInstantiator
 from agent.orchestrator import run_agent_cycle
 from state.store import get_user_state, record_task_completed, record_task_postponed
 from state.models import TaskTemplate
@@ -8,6 +10,14 @@ from tasks import loader
 
 def main():
     """Main entry point for Momentum app."""
+    load_dotenv()
+    api_key = os.getenv("GEMINI_API_KEY")
+    if not api_key:
+        print("Error: GEMINI_API_KEY not found in environment variables. Please create a .env file.")
+        return
+
+    llm_client = LLMTaskInstantiator(model_name="gemini-1.5-flash", api_key=api_key)
+
     # Load task templates
     # TODO: Consider moving the loader to orchestrator or another appropriate module
     templates = loader.load_task_templates(Path("tasks/android_compose_tasks.json"))
@@ -34,7 +44,7 @@ def main():
         response = run_agent_cycle(user_state=user_state,
                                    task_templates= templates, 
                                    system_prompt = system_prompt, 
-                                   instatiator=fake_llm_adapter.fake_task_instantiator)
+                                   instatiator=llm_client.instantiate_task)
         if response:
             print(f"Selected strategy: {response.strategy_name}")
             print(f"Agent Output: {response.task_text} (ID: {response.selected_task_template_id})")
