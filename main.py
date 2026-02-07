@@ -16,7 +16,7 @@ def main():
         print("Error: GEMINI_API_KEY not found in environment variables. Please create a .env file.")
         return
 
-    llm_client = LLMTaskInstantiator(model_name="gemini-1.5-flash", api_key=api_key)
+    llm_client = LLMTaskInstantiator(model_name="gemini-3-flash-preview", api_key=api_key)
 
     # Load task templates
     # TODO: Consider moving the loader to orchestrator or another appropriate module

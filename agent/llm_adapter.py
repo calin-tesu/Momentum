@@ -1,10 +1,11 @@
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 from state.models import AgentInput
 
 class LLMTaskInstantiator:
     def __init__(self, model_name: str, api_key: str):
-        genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel(model_name)
+        self.client = genai.Client(api_key=api_key)
+        self.model_name = model_name
 
     def instantiate_task(
         self,
@@ -42,7 +43,15 @@ class LLMTaskInstantiator:
                 user_prompt_parts.append(f"Known Components: {', '.join(ctx.known_components)}")
 
         user_prompt = "\n".join(user_prompt_parts)
-        full_prompt = f"{system_prompt}\n\n{user_prompt}"
 
-        response = self.model.generate_content(full_prompt)
+        config = types.GenerateContentConfig(
+            # We add system prompt here not in user prompt to separate concerns
+            system_instruction=system_prompt,
+        )
+
+        response = self.client.models.generate_content(
+            model=self.model_name,
+            contents=user_prompt,
+            config=config,
+        )
         return response.text
